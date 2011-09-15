@@ -112,6 +112,43 @@ module Checkmate
     files.each { |file| results[file] = Checkmate.check_file file }
     results
   end
+
+  class Printer
+    def initialize(results, output_type = :normal)
+      @results = results
+      @output_type = output_type
+    end
+
+    def print_results
+      case @output_type
+      when :normal then print_normal
+      else print normal
+      end
+    end
+
+    private
+
+    def print_normal
+      violations_found = 0
+      bad_files = 0
+      @results.each do |file, result|
+        next if result.empty?
+        puts "Style violations in #{file}:".red
+        bad_files += 1
+        result.each do |violation|
+          violations_found += 1
+          puts "Line #{violation.line_number}: #{violation.rule.message}".blue
+          puts violation.line
+          puts " " * violation.offset + "^".blue if violation.offset
+        end
+      end
+      if violations_found.zero?
+        puts "No violations found.".green
+      else
+        puts "Found #{plural(violations_found, "violation")} in #{plural(bad_files, "bad file")}.".red
+      end
+    end
+  end
 end
 
 def plural(amount, thing)
@@ -122,22 +159,5 @@ end
 if __FILE__ == $0
   Checkmate.load_styles(ARGV[0])
   results = Checkmate.check_path ARGV[1]
-  violations_found = 0
-  bad_files = 0
-  results.each do |file, result|
-    next if result.empty?
-    puts "Style violations in #{file}:".red
-    bad_files += 1
-    result.each do |violation|
-      violations_found += 1
-      puts "Line #{violation.line_number}: #{violation.rule.message}".blue
-      puts violation.line
-      puts " " * violation.offset + "^".blue if violation.offset
-    end
-  end
-  if violations_found.zero?
-    puts "No violations found.".green
-  else
-    puts "Found #{plural(violations_found, "violation")} in #{plural(bad_files, "bad file")}.".red
-  end
+  Checkmate::Printer.new(results).print_results
 end
