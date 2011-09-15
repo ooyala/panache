@@ -5,6 +5,7 @@ module Checkmate
   @@styles = []
 
   DEFAULT_TAB_SPACES = 2
+  DEFAULT_STYLE_PATH = File.expand_path("~/repos/checkmate/checkmate_styles")
   Violation = Struct.new :line_number, :line, :offset, :style, :rule
 
   class Rule
@@ -77,7 +78,7 @@ module Checkmate
   end
 
   # Load all Checkmate styles (files matching *_style.rb) from a given directory.
-  def self.load_styles(directory)
+  def self.load_styles(directory = DEFAULT_STYLE_PATH)
     raise "Need a directory of Checkmate styles" unless File.directory?(directory)
     style_files = Dir.glob(File.join(directory, "*_style.rb"))
     raise "No Checkmate styles found in #{directory}" if style_files.empty?
