@@ -1,3 +1,4 @@
 #!/bin/sh
 
+export RBENV_VERSION="1.9.2-p290"
 checkmate -s ~/repos/checkmate_styles $(git show --pretty="format:" --name-only)
