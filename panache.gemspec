@@ -15,6 +15,7 @@ It does simple parsing of source files and then applies user-specified rules to 
                   EOF
 
   s.rubyforge_project = "panache"
+  s.required_ruby_version = ">= 1.9.2"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
