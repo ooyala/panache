@@ -108,7 +108,7 @@ module Checkmate
     else
       raise "Bad path: #{path}."
     end
-    puts "Checking #{files.size} files.".green
+    puts "Checking #{path}".green
     results = {}
     files.each { |file| results[file] = Checkmate.check_file file }
     results
