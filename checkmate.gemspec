@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name        = "checkmate"
   s.version     = Checkmate::VERSION
   s.authors     = ["Caleb Spare", "Daniel MacDougall"]
-  s.email       = ["dmacdougall@gmail.com"]
+  s.email       = ["caleb@ooyala.com", "dmac@ooyala.com"]
   s.homepage    = ""
   s.summary     = %q{Create style checkers for various languages}
   s.description = <<-EOF
