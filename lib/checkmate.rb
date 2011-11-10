@@ -155,10 +155,3 @@ end
 def plural(amount, thing)
   "#{amount} #{thing}#{"s" unless amount == 1}"
 end
-
-# TODO(caleb): multiple output options.
-if __FILE__ == $0
-  Checkmate.load_styles(ARGV[0])
-  results = Checkmate.check_path ARGV[1]
-  Checkmate::Printer.new(results).print_results
-end

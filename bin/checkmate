@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require "checkmate"
+
+# TODO(caleb): multiple output options.
+Checkmate.load_styles(ARGV[0])
+results = Checkmate.check_path ARGV[1]
+Checkmate::Printer.new(results).print_results
