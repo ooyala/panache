@@ -1,0 +1,3 @@
+#!/bin/sh
+
+checkmate -s ~/repos/checkmate_styles $(git show --pretty="format:" --name-only)
