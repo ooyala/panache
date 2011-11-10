@@ -2,7 +2,20 @@
 
 require "checkmate"
 
+# TODO(dmac): Allow for multiple code_paths
 # TODO(caleb): multiple output options.
-Checkmate.load_styles(ARGV[0])
-results = Checkmate.check_path ARGV[1]
+
+style_directory = code_path = nil
+ARGV.each_with_index do |option, index|
+  next if ARGV[index - 1] == "-s"
+  if option == "-s"
+    style_directory = ARGV[index + 1]
+    next
+  end
+  code_path = option
+end
+style_directory ||= ENV["CHECKMATE_STYLES"]
+
+Checkmate.load_styles(style_directory)
+results = Checkmate.check_path(code_path)
 Checkmate::Printer.new(results).print_results
