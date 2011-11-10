@@ -9,6 +9,27 @@ avoid overlap with tasks best left to language-specific linters and static analy
 code parsing is done with Textpow, which uses TextMate syntax files and annotates source with tags (so that we
 can detect things like comments, string literals, etc). Then rules are applied based on Textpow tags.
 
+Usage
+-----
+
+```bash
+$ gem install checkmate
+$ checkmate [-s checkmate_styles] code_path [code_path ...]
+```
+
+`checkmate_styles` is the directory where your style files are stored and each `code_path` is a file
+or directory to check.
+
+One of the most useful ways to use checkmate is as a pre-commit or post-commit hook in your repository.
+For example, to check each file that was modified after you commit your git post-commit hook could look
+like:
+
+```bash
+#!/bin/sh
+
+checkmate -s ~/repos/checkmate_styles $(git show --pretty="format:" --name-only)
+```
+
 Creating new styles
 -------------------
 
@@ -52,8 +73,3 @@ TODO(caleb) Implement these. Ideas:
 * Colorized console output
 * Summary output suitable for consumption by other tools (# of tests / # of failures)
 * Markdown? (For automatic CR bot)
-
-Usage
------
-
-TODO(caleb)
