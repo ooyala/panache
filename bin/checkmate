@@ -5,6 +5,15 @@ require "checkmate"
 # TODO(dmac): Allow for multiple code_paths
 # TODO(caleb): multiple output options.
 
+def usage
+  <<-EOF
+Usage:
+  checkmate [-s styles_directory] code_path
+
+The styles_directory may also be specified with the CHECKMATE_STYLES environment variable.
+  EOF
+end
+
 style_directory = code_path = nil
 ARGV.each_with_index do |option, index|
   next if ARGV[index - 1] == "-s"
@@ -15,6 +24,11 @@ ARGV.each_with_index do |option, index|
   code_path = option
 end
 style_directory ||= ENV["CHECKMATE_STYLES"]
+
+if style_directory.nil? || code_path.nil?
+  puts usage
+  exit 1
+end
 
 Checkmate.load_styles(style_directory)
 results = Checkmate.check_path(code_path)
