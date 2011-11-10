@@ -1,7 +1,7 @@
-Checkmate
-=========
+Panache
+=======
 
-Checkmate is a simple way to create style checkers for various languages. It does simple parsing of source
+Panache is a simple way to create style checkers for various languages. It does simple parsing of source
 files and then applies user-specified rules to detect style violations.
 
 Code parsing is *not* full lexing; it is an intentional design goal to limit code introspection in order to
@@ -13,34 +13,34 @@ Usage
 -----
 
 ```bash
-$ gem install checkmate
-$ checkmate [-s checkmate_styles] code_path [code_path ...]
+$ gem install panache
+$ panache [-s panache_styles] code_path [code_path ...]
 ```
 
-`checkmate_styles` is the directory where your style files are stored and each `code_path` is a file
+`panache_styles` is the directory where your style files are stored and each `code_path` is a file
 or directory to check.
 
-One of the most useful ways to use checkmate is as a pre-commit or post-commit hook in your repository.
+One of the most useful ways to use Panache is as a pre-commit or post-commit hook in your repository.
 For example, to check each file that was modified after you commit your git post-commit hook could look
 like:
 
 ```bash
 #!/bin/sh
 
-checkmate -s ~/repos/checkmate_styles $(git show --pretty="format:" --name-only)
+panache -s ~/repos/panache_styles $(git show --pretty="format:" --name-only)
 ```
 
 Creating new styles
 -------------------
 
-To create a new style, you will need a Textmate syntax file and a rules file written in the Checkmate DSL.
+To create a new style, you will need a Textmate syntax file and a rules file written in the Panache DSL.
 
 The easiest way to get Textmate syntax files is to copy them out of a Textmate installation on your computer.
 They should have the path
 
     /Applications/TextMate.app/Contents/SharedSupport/Bundles/<your-language>.tmbundle/Syntaxes/<your-language>.plist
 
-This is a binary plist file, and Checkmate requires it to be in the text XML format; you can convert it like this:
+This is a binary plist file, and Panache requires it to be in the text XML format; you can convert it like this:
 
     $ plutil -convert xml1 <your-language>.plist
 
@@ -54,14 +54,14 @@ TODO(caleb): Update steps below.
 
 1. Make a file called `<language>_style.rb`, where `<language>` is the type of file you want to check.
 2. Use the DSL implemented in this file to write your style.
-   * The regex you give to Checkmate::Style#create matches the filenames you wish to check.
+   * The regex you give to Panache::Style#create matches the filenames you wish to check.
    * Each rule consists of a regex and a message to indicate what the violation was.
    * The regex may contain a match. The offset of the beginning of this match will be used to indicate
      exactly where a style violation occurred.
 
 Dumb example:
 
-    Checkmate::Style.create(/\.txt$/) do
+    Panache::Style.create(/\.txt$/) do
       rule /(q)/, "The letter 'q' is not allowed in text files."
     end
 

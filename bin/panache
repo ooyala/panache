@@ -1,15 +1,15 @@
 #!/usr/bin/env ruby
 
-require "checkmate"
+require "panache"
 
 # TODO(caleb): multiple output options.
 
 def usage
   <<-EOF
 Usage:
-  checkmate [-s styles_directory] code_path [code_path ...]
+  panache [-s styles_directory] code_path [code_path ...]
 
-The styles_directory may also be specified with the CHECKMATE_STYLES environment variable.
+The styles_directory may also be specified with the PANACHE_STYLES environment variable.
   EOF
 end
 
@@ -23,14 +23,14 @@ ARGV.each_with_index do |option, index|
   end
   code_paths << option
 end
-style_directory ||= ENV["CHECKMATE_STYLES"]
+style_directory ||= ENV["PANACHE_STYLES"]
 
 if style_directory.nil? || code_paths.empty?
   puts usage
   exit 1
 end
 
-Checkmate.load_styles(style_directory)
+Panache.load_styles(style_directory)
 results = {}
-code_paths.each { |path| results.merge! Checkmate.check_path(path) }
-Checkmate::Printer.new(results).print_results
+code_paths.each { |path| results.merge! Panache.check_path(path) }
+Panache::Printer.new(results).print_results

@@ -1,11 +1,11 @@
 require "find"
 require "colorize"
 
-module Checkmate
+module Panache
   @@styles = []
 
   DEFAULT_TAB_SPACES = 2
-  DEFAULT_STYLE_PATH = File.expand_path("~/repos/checkmate/checkmate_styles")
+  DEFAULT_STYLE_PATH = File.expand_path("~/repos/panache/panache_styles")
   Violation = Struct.new :line_number, :line, :offset, :style, :rule
 
   class Rule
@@ -44,7 +44,7 @@ module Checkmate
     def self.create(file_regex, &block)
       style = Style.new(file_regex)
       style.instance_eval &block
-      Checkmate.add_style style
+      Panache.add_style style
     end
 
     def spaces_per_tab(n)
@@ -77,11 +77,11 @@ module Checkmate
     @@styles << style
   end
 
-  # Load all Checkmate styles (files matching *_style.rb) from a given directory.
+  # Load all Panache styles (files matching *_style.rb) from a given directory.
   def self.load_styles(directory = DEFAULT_STYLE_PATH)
-    raise "Need a directory of Checkmate styles" unless File.directory?(directory)
+    raise "Need a directory of Panache styles" unless File.directory?(directory)
     style_files = Dir.glob(File.join(directory, "*_style.rb"))
-    raise "No Checkmate styles found in #{directory}" if style_files.empty?
+    raise "No Panache styles found in #{directory}" if style_files.empty?
     style_files.each do |style|
       puts "Loading #{style}...".green
       load style
@@ -110,7 +110,7 @@ module Checkmate
     end
     puts "Checking #{path}".green
     results = {}
-    files.each { |file| results[file] = Checkmate.check_file file }
+    files.each { |file| results[file] = Panache.check_file file }
     results
   end
 
