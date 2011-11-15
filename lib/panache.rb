@@ -106,7 +106,8 @@ module Panache
     elsif File.file? path
       files = [path]
     else
-      raise "Bad path: #{path}."
+      puts "Skipping path: #{path}".yellow
+      return {}
     end
     puts "Checking #{path}".green
     results = {}
