@@ -149,6 +149,7 @@ module Panache
       else
         puts "Found #{plural(violations_found, "violation")} in #{plural(bad_files, "bad file")}.".red
       end
+      violations_found.zero?
     end
   end
 end

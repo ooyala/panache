@@ -33,4 +33,4 @@ end
 Panache.load_styles(style_directory)
 results = {}
 code_paths.each { |path| results.merge! Panache.check_path(path) }
-Panache::Printer.new(results).print_results
+exit 1 unless Panache::Printer.new(results).print_results
